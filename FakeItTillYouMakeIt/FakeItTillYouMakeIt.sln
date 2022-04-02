@@ -1,13 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{4a5b10b7-163c-70b9-e425-86186c2103bc}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.CompatibilityLayer", "Sirenix.OdinInspector.CompatibilityLayer.csproj", "{468147da-868a-796a-e1f5-8ccb072c4d00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.CompatibilityLayer.Editor", "Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj", "{09a66d80-8094-8ba4-c2e3-11f7aa7f4036}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.Modules.UnityMathematics", "Sirenix.OdinInspector.Modules.UnityMathematics.csproj", "{45a6b190-bab0-4d91-c4f9-32859fa56771}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-
+		{4a5b10b7-163c-70b9-e425-86186c2103bc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4a5b10b7-163c-70b9-e425-86186c2103bc}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468147da-868a-796a-e1f5-8ccb072c4d00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468147da-868a-796a-e1f5-8ccb072c4d00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09a66d80-8094-8ba4-c2e3-11f7aa7f4036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09a66d80-8094-8ba4-c2e3-11f7aa7f4036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45a6b190-bab0-4d91-c4f9-32859fa56771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45a6b190-bab0-4d91-c4f9-32859fa56771}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
