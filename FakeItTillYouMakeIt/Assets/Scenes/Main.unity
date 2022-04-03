@@ -1853,9 +1853,33 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: SpeakerName
+      value: 
+      objectReference: {fileID: 732601761}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: AnswersParent
+      value: 
+      objectReference: {fileID: 805553428}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: SpeakerParent
+      value: 
+      objectReference: {fileID: 686693342}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: BackgroundFade
       value: 
       objectReference: {fileID: 514288901}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: TextFadeInTime
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: SpeakerLocation
+      value: 
+      objectReference: {fileID: 765704467}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: TextSpawnRyhthm
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: AnswersSpawnDelay
       value: 1.47
@@ -1867,6 +1891,22 @@ PrefabInstance:
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: AnswersSpawnRhythm
       value: 0.162
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: StatementTimeAfter
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: StatementTimeBefore
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: BackgroundFadeInTime
+      value: 0.467
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: BackgroundFadeOutTime
+      value: 0.464
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}

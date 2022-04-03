@@ -21,61 +21,65 @@ public class UIManager : MonoBehaviour
     public MeshRenderer Background;
     public MeshRenderer BackgroundFade;
 
-    [Header("Settings")]
-    [Range(0, 1f)] public float BackgroundFadeOutTime;
+    [Header("Settings")] [Range(0, 1f)] public float BackgroundFadeOutTime;
     [Range(0, 1f)] public float BackgroundFadeInTime;
     [Range(0, 1f)] public float TextFadeInTime;
     [Range(0, 3f)] public float TextSpawnRyhthm;
+    [Range(0, 1f)] public float SpeakerTimeBefore;
+    [Range(0, 5f)] public float StatementTimeBefore;
     [Range(0, 5f)] public float StatementTimeAfter;
     [Range(0, 1f)] public float AnswersSpawnRhythm;
 
-    public CanvasGroup[] Answers => AnswersParent.transform.Cast<CanvasGroup>().ToArray();
+    private CanvasGroup[] Answers => AnswersParent.GetComponentsInChildren<CanvasGroup>();
 
 
-    // Start is called before the first frame update
     void Start()
     {
         NextScreen(true, true, true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+
+
 
     private void NextScreen(bool isNewSpeaker, bool isNewLocation, bool isNewSituation)
     {
-        DOVirtual.Float(0, 1f, BackgroundFadeOutTime, alpha => { BackgroundFade.material.SetFloat("_Fading", alpha); })
-            .OnComplete(() =>
-            {
-                Statement.alpha = 0;
-                Answers.ForEach(answer => answer.alpha = 0);
+        var sequence = DOTween.Sequence();
 
-                var sequence = DOTween.Sequence();
-                sequence.Append(DOVirtual.Float(1f, 0, BackgroundFadeInTime,
-                    alpha => { BackgroundFade.material.SetFloat("_Fading", alpha); }));
+        sequence.AppendInterval(2f);
 
-                if (isNewSpeaker)
-                {
-                    SpeakerName.alpha = 0;
-                    SpeakerLocation.alpha = 0;
-                    sequence.Append(SpeakerName.DOFade(1f, TextFadeInTime));
-                    sequence.AppendInterval(TextSpawnRyhthm);
-                }
-                else if (isNewLocation)
-                {
-                    SpeakerLocation.alpha = 0;
-                    sequence.Append(SpeakerName.DOFade(1f, TextFadeInTime));
-                    sequence.AppendInterval(TextSpawnRyhthm);
-                }
+        sequence.Append(FadeBackground(false, BackgroundFadeOutTime));
+        sequence.AppendCallback(() =>
+        {
+            Statement.alpha = 0;
+            SpeakerName.alpha = 0;
+            SpeakerLocation.alpha = 0;
+            Answers.ForEach(answer => answer.alpha = 0);
 
-                sequence.Append(Statement.DOFade(1f, TextFadeInTime));
-                sequence.AppendInterval(StatementTimeAfter);
-                Answers.ForEach(answer =>
-                {
-                    sequence.Append(answer.DOFade(1f, TextFadeInTime));
-                    sequence.AppendInterval(AnswersSpawnRhythm);
-                });
-            });
+        });
+        sequence.Append(FadeBackground(true, BackgroundFadeInTime));
+
+        if (isNewSpeaker)
+        {
+            sequence.AppendInterval(SpeakerTimeBefore);
+            sequence.Append(SpeakerName.DOFade(1f, TextFadeInTime));
+            sequence.AppendInterval(TextSpawnRyhthm);
+            sequence.Append(SpeakerLocation.DOFade(1f, TextFadeInTime));
+            sequence.AppendInterval(StatementTimeBefore);
+        }
+
+        sequence.Append(Statement.DOFade(1f, TextFadeInTime));
+        sequence.AppendInterval(StatementTimeAfter);
+        Answers.ForEach(answer =>
+        {
+            sequence.Append(answer.DOFade(1f, TextFadeInTime));
+            sequence.AppendInterval(AnswersSpawnRhythm);
+        });
+    }
+
+    private Tweener FadeBackground(bool fadeIn, float duration)
+    {
+        var from = fadeIn ? 1f : 0;
+        var to = fadeIn ? 0 : 1f;
+        return DOVirtual.Float(from, to, duration, alpha => BackgroundFade.material.SetFloat("_Fading", alpha));
     }
 }
