@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NarrativeSlide : MonoBehaviour
+[System.Serializable]
+public class NarrativeSlide : Slide
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public NarrativeSlide() { }
+	public NarrativeSlide(string situationIndexex, string npc, string place, string text)
+	{
+		SituationIndex = situationIndexex;
+		NPC = npc;
+		Place = place;
+		Text = text;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

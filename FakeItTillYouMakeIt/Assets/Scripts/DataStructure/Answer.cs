@@ -5,15 +5,24 @@ using UnityEngine;
 [System.Serializable]
 public class Answer
 {
-	string index;
-	string text;
-	List<Statement> negativeConditions;
-	List<Statement> addedStatements;
+	public string Index;
+	public string Text;
+	public List<Statement> NegativeConditions;
+	public List<Statement> AddedStatements;
 
-	public Answer(Answer answer) {
-		index = answer.index;
-		text = answer.text;
-		negativeConditions = answer.negativeConditions;
-		addedStatements = answer.addedStatements;
+	public Answer(Answer answer)
+	{
+		Index = answer.Index;
+		Text = answer.Text;
+		NegativeConditions = answer.NegativeConditions;
+		AddedStatements = answer.AddedStatements;
+	}
+
+	public Answer(string index, string text, List<Statement> negativeConditions, List<Statement> addedStatements) 
+	{
+		Index = index;
+		Text = text;
+		NegativeConditions = negativeConditions;
+		AddedStatements = addedStatements;
 	}
 }
