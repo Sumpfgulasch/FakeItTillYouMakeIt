@@ -1,0 +1,9 @@
+Situation Index;Type;NPC;Place;Text;Possible Answers
+S1;Q;Larry;Interview, Office;What was the most dificult project you worked on so far?;A1,A2,A3,A4
+S1;N;Larry;Interview, Office;Random text;A1,A2,A3,A4
+S1;N;Larry;Interview, Office;Random text;A1,A2,A3,A4
+S1;Q;Larry;Interview, Office;Hilfe;A1,A2,A3,A4
+S1;Q;Larry;Interview, Office;Random text;A1,A2,A3,A4
+S1;Q;CEO, Henry the Great;Henry's Office;Hilfe;A1,A2,A3,A4
+S2;N;CEO, Henry the Great;Henry's Office;Random text;A1,A2,A3,A4
+S2;Q;CEO, Henry the Great;Henry's Office;Hilfe;A1,A2,A3,A4
