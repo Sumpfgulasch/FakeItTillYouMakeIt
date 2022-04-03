@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: BAHNSCHRIFT REGULAR SDF
   m_EditorClassIdentifier: 
-  hashCode: 432829861
+  hashCode: 34808319
   material: {fileID: 3114957255937203409}
-  materialHashCode: 1574934885
+  materialHashCode: 819769599
   m_Version: 1.1.0
   m_SourceFontFileGUID: 9b1da561c9918e54ca1ae76ba7b50cba
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 9b1da561c9918e54ca1ae76ba7b50cba, type: 3}
@@ -2551,7 +2551,7 @@ Material:
     - _ColorMask: 15
     - _CullMode: 0
     - _Diffuse: 0.5
-    - _FaceDilate: 0
+    - _FaceDilate: 0.2
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -2569,8 +2569,8 @@ Material:
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8888889
-    - _ScaleRatioB: 0.7222222
-    - _ScaleRatioC: 0.7222222
+    - _ScaleRatioB: 0.54444444
+    - _ScaleRatioC: 0.54444444
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
