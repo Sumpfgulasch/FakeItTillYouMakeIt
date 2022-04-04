@@ -2732,7 +2732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: BackgroundFade1Value
-      value: 0.091
+      value: 0.314
       objectReference: {fileID: 0}
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: BackgroundFadeInTime

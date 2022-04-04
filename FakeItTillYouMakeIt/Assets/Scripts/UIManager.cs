@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [Range(0, 1f)] public float BackgroundFadeHalfValue;
     [Range(0, 1f)] public float BackgroundLightMidIntensity;
     [Range(0, 1f)] public float BackgroundLightMaxIntensity;
+    [Range(0, 1f)] public float BackgroundLightIntensifyTime;
     [Range(0, 1f)] public float TextFadeInTime;
     [Range(0, 3f)] public float TextSpawnRyhthm;
     [Range(0, 1f)] public float SpeakerTimeBefore;
@@ -60,32 +61,25 @@ public class UIManager : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
 
-        sequence.Append(FadeBackgroundLight(0, BackgroundFadeOutTime).SetEase(Ease.InExpo));
-        sequence.Join(FadeBackgroundImage(1f, BackgroundFadeOutTime).SetEase(Ease.InExpo));
+        // 1. Fade out
+        sequence.Append(FadeBackgroundLight(BackgroundLightMaxIntensity, 0, BackgroundFadeOutTime));
+        sequence.Join(FadeBackgroundImage(BackgroundFade1Value, BackgroundFadeOutTime));
+        sequence.Join(SpeakerName.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
+        sequence.Join(SpeakerLocation.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
+        sequence.Join(Statement.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
+        Answers.ForEach(answer =>
+        {
+            sequence.Join(answer.DOFade(0, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
+        });
 
         sequence.AppendInterval(BackgroundFadeInDelay);
 
-        sequence.Join(SpeakerName.DOFade(0f, BackgroundFadeOutTime));
-        sequence.Join(SpeakerLocation.DOFade(0f, BackgroundFadeOutTime));
-        sequence.Join(Statement.DOFade(0f, BackgroundFadeOutTime));
-        Answers.ForEach(answer =>
-        {
-            sequence.Join(answer.DOFade(0, BackgroundFadeOutTime));
-        });
-
-        sequence.AppendCallback(() =>
-        {
-            Statement.alpha = 0;
-            SpeakerName.alpha = 0;
-            SpeakerLocation.alpha = 0;
-            Answers.ForEach(answer => answer.alpha = 0);
-
-        });
-
-        // Fade in background
-        sequence.Append(FadeBackgroundLight(BackgroundLightMidIntensity, BackgroundFadeInTime).SetEase(Ease.OutCubic));
+        // 2. FADE IN
+        // Background
+        sequence.Append(FadeBackgroundLight(0, BackgroundLightMidIntensity, BackgroundFadeInTime));
         sequence.Join(FadeBackgroundImage(BackgroundFadeHalfValue, BackgroundFadeInTime).SetEase(Ease.OutCubic));
 
+        // Speaker
         if (isNewSpeaker)
         {
             sequence.AppendInterval(SpeakerTimeBefore);
@@ -95,12 +89,14 @@ public class UIManager : MonoBehaviour
             sequence.AppendInterval(StatementTimeBefore);
         }
 
+        // Statement & light
         sequence.Append(Statement.DOFade(1f, 0));
-        sequence.Join(FadeBackgroundLight(BackgroundLightMaxIntensity, 0.2f));
+        sequence.Join(FadeBackgroundLight(BackgroundLightMidIntensity, BackgroundLightMaxIntensity, BackgroundLightIntensifyTime));
 
         sequence.AppendInterval(StatementTimeAfter);
         Answers.ForEach(answer =>
         {
+            // Answers
             sequence.Append(answer.DOFade(1f, 0));
             sequence.AppendInterval(AnswersSpawnRhythm);
         });
@@ -108,10 +104,9 @@ public class UIManager : MonoBehaviour
         return sequence;
     }
 
-    private Tweener FadeBackgroundLight(float targetValue, float duration)
+    private Tweener FadeBackgroundLight(float from, float to, float duration)
     {
-        var from = Background.material.GetFloat("_MainColorIntensity");
-        return DOVirtual.Float(from, targetValue, duration, alpha => Background.material.SetFloat("_MainColorIntensity", alpha)); // _Fading
+        return DOVirtual.Float(from, to, duration, alpha => Background.material.SetFloat("_MainColorIntensity", alpha));
     }
 
     private Tweener FadeBackgroundImage(float targetValue, float duration)

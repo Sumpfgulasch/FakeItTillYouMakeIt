@@ -104,7 +104,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _MainColorIntensity: 1.5143079
+    - _MainColorIntensity: 1
     - _Metallic: 0
     - _NoiseAmount: 1
     - _OcclusionStrength: 1
