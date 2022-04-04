@@ -8,14 +8,26 @@ public class GameManager : MonoBehaviour
     public DataBase DataBase;
     public UIManager UIManager;
 
-    private int _curSituationIndex;
-    private int _curSlideIndex;
+    private int _currentSituationIndex;
+
+    // private string CurrentSituationIndex
+    // {
+    //     get => "S" + (_currentSituationIndex + 1).ToString();
+    //     set => _currentSituationIndex = value;
+    // }
+
+    // public static string IntToSituationIndex (this int integer)
+    // {
+    //
+    // }
+
+    private int _currentSlideIndex;
     public int MaxPlayerLifes;
 
     private int _playerLifes;
 
-    private Situation CurrentSituation => DataBase.Situations[_curSituationIndex.ToString()];
-    private Slide CurrentSlide => CurrentSituation.Slides[_curSlideIndex];
+    private Situation CurrentSituation => DataBase.SituationsPreview[_currentSituationIndex];
+    private Slide CurrentSlide => CurrentSituation.Slides[_currentSlideIndex];
     private int CurrentMaxSlides => CurrentSituation.Slides.Count;
     private string CurrentQuestion => CurrentSlide.Text;
     private string CurrentNPC => CurrentSlide.NPC;
@@ -28,12 +40,6 @@ public class GameManager : MonoBehaviour
         _playerLifes = MaxPlayerLifes;
 
         UIManager.FillScreenTexts(CurrentSlide);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void OnAnswerChosen()
@@ -70,15 +76,15 @@ public class GameManager : MonoBehaviour
     private ScreenData GetNextSlideData()
     {
         var nextScreenData = new ScreenData();
-        _curSlideIndex++;
+        _currentSlideIndex++;
 
-        if (_curSlideIndex < CurrentMaxSlides)
+        if (_currentSlideIndex < CurrentMaxSlides)
             return nextScreenData;
 
-        _curSlideIndex = 0;
-        _curSituationIndex++;
+        _currentSlideIndex = 0;
+        _currentSituationIndex++;
 
-        if (_curSituationIndex < DataBase.Situations.Count)
+        if (_currentSituationIndex < DataBase.Situations.Count)
             nextScreenData = new ScreenData(true, true, true, false);
         else
             nextScreenData = new ScreenData(false, false, false, true);

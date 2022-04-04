@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour
         Question.text = slide.Text;
 
         foreach (Transform child in AnswersParent.transform)
-            Destroy(child);
+            Destroy(child.gameObject);
         foreach (var answer in slide.PossibleAnswers)
         {
             var answerObject = Instantiate(AnswerPrefab, AnswersParent.transform);

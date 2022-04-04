@@ -9,22 +9,22 @@ public class DataBase : MonoBehaviour
     public Dictionary<string, Answer> Answers;
     public Dictionary<string, Situation> Situations;
 
-    public List<Statement> statementsPreview;
-    public List<Answer> answersPreview;
+    public List<Statement> StatementsPreview;
+    public List<Answer> AnswersPreview;
     List<Slide> slidesPreview;
-    public List<Situation> situationsPreview;
+    public List<Situation> SituationsPreview;
 
     // Start is called before the first frame update
     void Start()
     {
         FetchStatements();
-        statementsPreview = Statements.Values.ToList();
+        StatementsPreview = Statements.Values.ToList();
 
         FetchAnswers();
-        answersPreview = Answers.Values.ToList();
+        AnswersPreview = Answers.Values.ToList();
 
         FetchSituations();
-        situationsPreview = Situations.Values.ToList();
+        SituationsPreview = Situations.Values.ToList();
     }
 
      public void FetchStatements()
