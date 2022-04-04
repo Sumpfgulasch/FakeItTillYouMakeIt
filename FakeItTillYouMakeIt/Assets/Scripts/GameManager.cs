@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _playerLifes = MaxPlayerLifes;
+
+        UIManager.FillScreenTexts(CurrentSlide);
     }
 
     // Update is called once per frame
@@ -39,21 +41,25 @@ public class GameManager : MonoBehaviour
         var sequence = DOTween.Sequence();
 
         var correctAnswer = EvaluateAnswer();
+        var nextSlideData = GetNextSlideData();
+
         if (correctAnswer)
-        {
-            ProceedToNextSlide();
-        }
+            sequence.Append(UIManager.ShowCorrectReaction());
         else
         {
-            // var sequence = DOTween.Sequence();
             sequence.Append(UIManager.ShowErrorReaction());
 
-            EvaluateError();
-            if (HasLifes)
+            _playerLifes--;
+            if (!HasLifes)
             {
-                sequence.Append(UIManager.GoToNextScreen(true));
+                sequence.Append(UIManager.ShowLoseScreen());
+                return;
             }
         }
+
+        sequence.Append(!nextSlideData.IsEnd
+            ? UIManager.GoToNextScreen(CurrentSlide, nextSlideData)
+            : UIManager.ShowEndScreen());
     }
 
     private bool EvaluateAnswer()
@@ -61,19 +67,45 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private void IncreaseSlideIndex()
+    private ScreenData GetNextSlideData()
     {
+        var nextScreenData = new ScreenData();
+        _curSlideIndex++;
 
-    }
+        if (_curSlideIndex < CurrentMaxSlides)
+            return nextScreenData;
 
-    private void ProceedToNextSlide()
-    {
-        UIManager.GoToNextScreen(true);
+        _curSlideIndex = 0;
+        _curSituationIndex++;
+
+        if (_curSituationIndex < DataBase.Situations.Count)
+            nextScreenData = new ScreenData(true, true, true, false);
+        else
+            nextScreenData = new ScreenData(false, false, false, true);
+
+        return nextScreenData;
     }
 
     private void EvaluateError()
     {
         _playerLifes--;
+    }
+
+
+    public struct ScreenData
+    {
+        public bool IsNewSituation;
+        public bool IsNewNPC;
+        public bool IsNewLocation;
+        public bool IsEnd;
+
+        public ScreenData(bool isNewSituation, bool isNewNpc, bool isNewLocation, bool isEnd)
+        {
+            IsNewSituation = isNewSituation;
+            IsNewNPC = isNewNpc;
+            IsNewLocation = isNewLocation;
+            IsEnd = isEnd;
+        }
     }
 
 
