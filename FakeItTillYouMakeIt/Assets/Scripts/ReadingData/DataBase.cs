@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -6,34 +5,32 @@ using System.Linq;
 
 public class DataBase : MonoBehaviour
 {
+    public Dictionary<string, Statement> Statements;
+    public Dictionary<string, Answer> Answers;
+    public Dictionary<string, Situation> Situations;
 
-    public Dictionary<string, Statement> statements;
-    public Dictionary<string, Answer> answers;
-    public Dictionary<string, Situation> situations;
-
-    
     public List<Statement> statementsPreview;
     public List<Answer> answersPreview;
     List<Slide> slidesPreview;
     public List<Situation> situationsPreview;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         FetchStatements();
-        statementsPreview = statements.Values.ToList();
+        statementsPreview = Statements.Values.ToList();
 
         FetchAnswers();
-        answersPreview = answers.Values.ToList();
+        answersPreview = Answers.Values.ToList();
 
         FetchSituations();
-        situationsPreview = situations.Values.ToList();
+        situationsPreview = Situations.Values.ToList();
     }
-   
-     public void FetchStatements() 
+
+     public void FetchStatements()
     {
         Debug.Log("Fetching Statements");
-        statements = new Dictionary<string, Statement>();
+        Statements = new Dictionary<string, Statement>();
 
         List<Dictionary<string, object>> data = CSVReader.Read("StatementsDataTable");
 
@@ -42,7 +39,7 @@ public class DataBase : MonoBehaviour
             string index = data[i]["Index"].ToString();
             string meaning = data[i]["Meaning"].ToString();
 
-            statements.Add(index, new Statement(index, meaning));
+            Statements.Add(index, new Statement(index, meaning));
         }
     }
 
@@ -50,7 +47,7 @@ public class DataBase : MonoBehaviour
     {
         Debug.Log("Fetching Answers");
 
-        answers = new Dictionary<string, Answer>();
+        Answers = new Dictionary<string, Answer>();
 
         List<Dictionary<string, object>> data = CSVReader.Read("AnswersDataTable");
         Debug.Log("answers count " + data.Count);
@@ -70,14 +67,14 @@ public class DataBase : MonoBehaviour
 
 
             Answer newAswer = new Answer(index, text, negativeConditions, addedStatements);
-			answers.Add(index, newAswer);
+			Answers.Add(index, newAswer);
 		}
 	}
 
     public void FetchSituations()
     {
-        situations = new Dictionary<string, Situation>();
-  
+        Situations = new Dictionary<string, Situation>();
+
 
         // fetch slides
         Debug.Log("Fetching Slides");
@@ -117,7 +114,7 @@ public class DataBase : MonoBehaviour
             if (type == "Q")
             {
                 Debug.Log("cur slide type was Q");
-                curSlide = new QuestionSlide(situationIndex, NPC, place, text, possibleAnswers);  
+                curSlide = new QuestionSlide(situationIndex, NPC, place, text, possibleAnswers);
 
             }
             else if (type == "N")
@@ -132,12 +129,12 @@ public class DataBase : MonoBehaviour
 
             // check if a situation with that index exist, if yes, add this slide, if not, create a new situation
 
-            if (!situations.ContainsKey(situationIndex))
+            if (!Situations.ContainsKey(situationIndex))
             {
-                situations.Add(situationIndex, new Situation(situationIndex, new List<Slide>()));
+                Situations.Add(situationIndex, new Situation(situationIndex, new List<Slide>()));
             }
 
-            situations[situationIndex].Slides.Add(curSlide);
+            Situations[situationIndex].Slides.Add(curSlide);
         }
 
         Debug.Log("converting to situations");
@@ -174,14 +171,14 @@ public class DataBase : MonoBehaviour
         return outputDict;
     }
 
-    public Statement GetStatementWithIndex(string index) 
+    public Statement GetStatementWithIndex(string index)
     {
-        return statements[index];
+        return Statements[index];
     }
 
     public Answer GetAnswerWithIndex(string index)
     {
-        return answers[index];
+        return Answers[index];
     }
 
 

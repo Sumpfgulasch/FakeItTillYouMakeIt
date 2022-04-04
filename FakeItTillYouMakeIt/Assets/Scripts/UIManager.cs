@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TestTools;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -26,13 +21,10 @@ public class UIManager : MonoBehaviour
     [Range(0, 1f)] public float BackgroundFadeOutTime;
     [Range(0, 1f)] public float BackgroundFadeInDelay;
     [Range(0, 1f)] public float BackgroundFadeInTime;
-    [Range(0, 1f)] public float BackgroundFade1Value;
-    [Range(0, 1f)] public float BackgroundFadeHalfValue;
     [Range(0, 1f)] public float BackgroundLightMidIntensity;
     [Range(0, 1f)] public float BackgroundLightMaxIntensity;
     [Range(0, 1f)] public float BackgroundLightIntensifyTime;
     [Range(0, 1f)] public float TextFadeInTime;
-    [Range(0, 3f)] public float TextSpawnRyhthm;
     [Range(0, 1f)] public float SpeakerTimeBefore;
     [Range(0, 2f)] public float SpeakerSpawnRyhthm;
     [Range(0, 5f)] public float StatementTimeBefore;
@@ -44,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        _screenSequence = NextScreen(true, true, true);
+        _screenSequence = GoToNextScreen(true, true, true);
     }
 
     private void Update()
@@ -52,18 +44,17 @@ public class UIManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _screenSequence.Kill();
-            _screenSequence = NextScreen(true, true, true);
+            _screenSequence = GoToNextScreen(true, true, true);
         }
     }
 
 
-    private Sequence NextScreen(bool isNewSpeaker, bool isNewLocation, bool isNewSituation)
+    public Sequence GoToNextScreen(bool isNewSpeaker, bool isNewLocation = true, bool isNewSituation = true)
     {
         var sequence = DOTween.Sequence();
 
         // 1. Fade out
         sequence.Append(FadeBackgroundLight(BackgroundLightMaxIntensity, 0, BackgroundFadeOutTime));
-        sequence.Join(FadeBackgroundImage(BackgroundFade1Value, BackgroundFadeOutTime));
         sequence.Join(SpeakerName.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
         sequence.Join(SpeakerLocation.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
         sequence.Join(Statement.DOFade(0f, BackgroundFadeOutTime).SetEase(Ease.OutCirc));
@@ -77,7 +68,6 @@ public class UIManager : MonoBehaviour
         // 2. FADE IN
         // Background
         sequence.Append(FadeBackgroundLight(0, BackgroundLightMidIntensity, BackgroundFadeInTime));
-        sequence.Join(FadeBackgroundImage(BackgroundFadeHalfValue, BackgroundFadeInTime).SetEase(Ease.OutCubic));
 
         // Speaker
         if (isNewSpeaker)
@@ -113,5 +103,15 @@ public class UIManager : MonoBehaviour
     {
         var from = BackgroundFade.material.GetFloat("_Fading");
         return DOVirtual.Float(from, targetValue, duration, alpha => BackgroundFade.material.SetFloat("_Fading", alpha));
+    }
+
+    public Tween ShowCorrectReaction()
+    {
+        return null;
+    }
+
+    public Tween ShowErrorReaction()
+    {
+        return null;
     }
 }
