@@ -42,11 +42,11 @@ public class GameManager : MonoBehaviour
         UIManager.FillScreenTexts(CurrentSlide);
     }
 
-    public void OnAnswerChosen()
+    public void OnAnswerChosen(Answer answer)
     {
         var sequence = DOTween.Sequence();
 
-        var correctAnswer = EvaluateAnswer();
+        var correctAnswer = EvaluateAnswer(answer);
         var nextSlideData = GetNextSlideData();
 
         if (correctAnswer)
@@ -63,14 +63,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        sequence.Append(!nextSlideData.IsEnd
-            ? UIManager.GoToNextScreen(CurrentSlide, nextSlideData)
-            : UIManager.ShowEndScreen());
+        sequence.Append(nextSlideData.IsEnd
+            ? UIManager.ShowEndScreen()
+            : UIManager.GoToNextScreen(CurrentSlide, nextSlideData));
     }
 
-    private bool EvaluateAnswer()
+    private bool EvaluateAnswer(Answer answer)
     {
-        return false;
+        // to do: do stuff
+        return true;
     }
 
     private ScreenData GetNextSlideData()

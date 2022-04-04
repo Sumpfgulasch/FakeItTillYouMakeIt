@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("References")] public Canvas Canvas;
+    [Header("References")]
+    public GameManager GameManager;
     public CanvasGroup EntireCanvasGroup;
     public CanvasGroup SpeakerParent;
     public TMP_Text NPCName;
@@ -15,6 +16,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text Question;
     public LayoutGroup AnswersParent;
     public GameObject AnswerPrefab;
+    public AnswerManager AnswerManager;
     public MeshRenderer Background;
     public MeshRenderer BackgroundFade;
 
@@ -33,20 +35,6 @@ public class UIManager : MonoBehaviour
 
     private CanvasGroup[] Answers => AnswersParent.GetComponentsInChildren<CanvasGroup>();
     private Sequence _screenSequence;
-
-    void Start()
-    {
-        //_screenSequence = GoToNextScreen(true, true, true);
-    }
-
-    private void Update()
-    {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     _screenSequence.Kill();
-        //     _screenSequence = GoToNextScreen(true, true, true);
-        // }
-    }
 
 
     public Sequence GoToNextScreen(Slide screen, GameManager.ScreenData screenPlayerData)
@@ -132,11 +120,22 @@ public class UIManager : MonoBehaviour
         Question.text = slide.Text;
 
         foreach (Transform child in AnswersParent.transform)
-            Destroy(child.gameObject);
+            RemoveAnswer(child);
         foreach (var answer in slide.PossibleAnswers)
-        {
-            var answerObject = Instantiate(AnswerPrefab, AnswersParent.transform);
-            answerObject.GetComponentInChildren<TMP_Text>().text = answer.Text;
-        }
+            CreateAnswer(answer);
+    }
+
+    private void RemoveAnswer(Transform transform)
+    {
+        transform.GetComponent<AnswerHolder>().OnClick -= GameManager.OnAnswerChosen;
+        Destroy(transform.gameObject);
+    }
+
+    private void CreateAnswer(Answer answer)
+    {
+        var answerObject = Instantiate(AnswerPrefab, AnswersParent.transform);
+        answerObject.GetComponentInChildren<TMP_Text>().text = answer.Text;
+        answerObject.GetComponent<AnswerHolder>().Answer = answer;
+        answerObject.GetComponent<AnswerHolder>().OnClick += GameManager.OnAnswerChosen;
     }
 }
