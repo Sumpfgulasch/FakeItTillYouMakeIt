@@ -1,15 +1,13 @@
 Index;Meaning
-E1;I like Cats
-E2;I like dogs
-E3;I like parrots
-E4;I don't like cats
-E5;I have 5+ years of experience with Unity
-E6;I always use programmers to help me
-E7;I know how to programm myself 
-E8;I know c#
-E9;I know c++
-E10;I made a pacman clone once
-E11;I have expericne with platformers 
-E12;I published a small game with a team of 2
-E13;I woekd on tpp games
-E14;I worked on open-world games
+E1;I can write Design Documentation
+E2;I cannot write Design Documentation
+E3;I can do engine Stuff
+E4;I cannot do engine stuff
+E5;Knowlege about different genres
+E6;Extensive knowlege about simulators
+E7;Fluent English
+E8;B2 English
+E9;Only professional gamedev experience
+E10;No professional  gamedev expeircne
+E11;Expericne in a logistics company
+E12;B2 German
