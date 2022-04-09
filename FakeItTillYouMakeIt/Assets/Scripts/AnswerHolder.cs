@@ -1,8 +1,8 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public class AnswerHolder : MonoBehaviour
 {
     public event Action<Answer> OnClick;

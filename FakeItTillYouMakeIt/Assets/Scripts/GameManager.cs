@@ -10,17 +10,6 @@ public class GameManager : MonoBehaviour
 
     private int _currentSituationIndex;
 
-    // private string CurrentSituationIndex
-    // {
-    //     get => "S" + (_currentSituationIndex + 1).ToString();
-    //     set => _currentSituationIndex = value;
-    // }
-
-    // public static string IntToSituationIndex (this int integer)
-    // {
-    //
-    // }
-
     private int _currentSlideIndex;
     public int MaxPlayerLifes;
 
@@ -39,15 +28,16 @@ public class GameManager : MonoBehaviour
     {
         _playerLifes = MaxPlayerLifes;
 
-        UIManager.FillScreenTexts(CurrentSlide);
+        UIManager.LoadSlideTexts(CurrentSlide);
     }
 
     public void OnAnswerChosen(Answer answer)
     {
         var sequence = DOTween.Sequence();
 
-        var correctAnswer = EvaluateAnswer(answer);
+        IncreaseSlideIndex();
         var nextSlideData = GetNextSlideData();
+        var correctAnswer = EvaluateAnswer(answer);
 
         if (correctAnswer)
             sequence.Append(UIManager.ShowCorrectReaction());
@@ -58,14 +48,20 @@ public class GameManager : MonoBehaviour
             _playerLifes--;
             if (!HasLifes)
             {
-                sequence.Append(UIManager.ShowLoseScreen());
+                sequence.Append(UIManager.GoToLostScreen());
                 return;
             }
         }
 
         sequence.Append(nextSlideData.IsEnd
-            ? UIManager.ShowEndScreen()
-            : UIManager.GoToNextScreen(CurrentSlide, nextSlideData));
+            ? UIManager.GoToEndScreen()
+            : UIManager.GoToSlide(CurrentSlide, nextSlideData));
+    }
+
+    public void OnContinueButtonClicked()
+    {
+        IncreaseSlideIndex();
+        UIManager.GoToSlide(CurrentSlide, GetNextSlideData());
     }
 
     private bool EvaluateAnswer(Answer answer)
@@ -77,13 +73,6 @@ public class GameManager : MonoBehaviour
     private ScreenData GetNextSlideData()
     {
         var nextScreenData = new ScreenData();
-        _currentSlideIndex++;
-
-        if (_currentSlideIndex < CurrentMaxSlides)
-            return nextScreenData;
-
-        _currentSlideIndex = 0;
-        _currentSituationIndex++;
 
         if (_currentSituationIndex < DataBase.Situations.Count)
             nextScreenData = new ScreenData(true, true, true, false);
@@ -93,11 +82,15 @@ public class GameManager : MonoBehaviour
         return nextScreenData;
     }
 
-    private void EvaluateError()
+    private void IncreaseSlideIndex()
     {
-        _playerLifes--;
-    }
+        _currentSlideIndex++;
+        if (_currentSlideIndex < CurrentMaxSlides)
+            return;
 
+        _currentSlideIndex = 0;
+        _currentSituationIndex++;
+    }
 
     public struct ScreenData
     {
