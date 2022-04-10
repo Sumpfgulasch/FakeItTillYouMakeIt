@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using DG.Tweening;
 using Sirenix.Utilities;
@@ -43,6 +44,8 @@ public class UIManager : MonoBehaviour
     [Range(0, 5f)] public float NarrativeTextTimeAfter;
 
     private CanvasGroup[] Answers => AnswersParent.GetComponentsInChildren<CanvasGroup>();
+    private List<CanvasGroup> _answers;
+    private List<CanvasGroup> _oldAnswers;
     private Sequence _screenSequence;
     private CanvasGroup _currentScreen;
 
@@ -96,17 +99,12 @@ public class UIManager : MonoBehaviour
                 sequence.AppendInterval(QuestionTimeAfter);
 
                 // Answers
-                CanvasGroup[] answers = default;
-                sequence.AppendCallback(() =>
+                _answers = CreateAnswers(slide);
+                _answers.ForEach(answer =>
                 {
-                    answers = Answers;
-                    answers.ForEach(answer =>
-                    {
-                        sequence.Append(answer.DOFade(1f, 0));
-                        sequence.AppendInterval(AnswersSpawnRhythm);
-                    });
+                    sequence.Append(answer.DOFade(1f, 0));
+                    sequence.AppendInterval(AnswersSpawnRhythm);
                 });
-
 
                 break;
             }
@@ -182,7 +180,7 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
-    public void LoadSlideTexts(Slide slide)
+    private void LoadSlideTexts(Slide slide)
     {
         NPCName.text = slide.NPC;
         NPCLocation.text = slide.Place;
@@ -192,10 +190,11 @@ public class UIManager : MonoBehaviour
             case QuestionSlide:
             {
                 Question.text = slide.Text;
-                foreach (Transform child in AnswersParent.transform)
-                    RemoveAnswer(child);
-                foreach (var answer in slide.PossibleAnswers)
-                    CreateAnswer(answer);
+                _answers = new List<CanvasGroup>();
+                // foreach (Transform child in AnswersParent.transform)
+                //     RemoveAnswer(child.transform);
+                // foreach (var answer in slide.PossibleAnswers)
+                //     _answers.Add(CreateAnswer(answer));
                 break;
             }
             case NarrativeSlide:
@@ -213,12 +212,25 @@ public class UIManager : MonoBehaviour
         Destroy(transform.gameObject);
     }
 
-    private void CreateAnswer(Answer answer)
+    private List<CanvasGroup> CreateAnswers(Slide slide)
+    {
+        var answers = new List<CanvasGroup>();
+        foreach (Transform child in AnswersParent.transform)
+            RemoveAnswer(child);
+        foreach (var answer in slide.PossibleAnswers)
+            answers.Add(CreateAnswer(answer));
+        _oldAnswers = answers;
+        return answers;
+    }
+
+    private CanvasGroup CreateAnswer(Answer answer)
     {
         var answerObject = Instantiate(AnswerPrefab, AnswersParent.transform);
         answerObject.GetComponentInChildren<TMP_Text>().text = answer.Text;
         answerObject.GetComponent<CanvasGroup>().alpha = 0;
         answerObject.GetComponent<AnswerHolder>().Answer = answer;
         answerObject.GetComponent<AnswerHolder>().OnClick += GameManager.OnAnswerChosen;
+
+        return answerObject.GetComponent<CanvasGroup>();
     }
 }
