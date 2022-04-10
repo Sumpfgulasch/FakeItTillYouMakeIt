@@ -1,15 +1,35 @@
-Index;Text;Negative Conditions;Added statements
-A1;A pacman clone;E5;E10
-A2;A simple plattformer  ;E5;E11
-A3;An indie game that I published  with two other friends;;E12
-A4;Basically skyrim but cooler;;E13, E14
-A5;;;
-A6;;;
-A7;;;
-A8;;;
-A9;;;
-A10;;;
-A11;;;
-A12;;;
-A13;;;
-A14;;;
+Index;Text;Added statements;Negative Conditions
+CV1;All my life I have been working as a professional game designer in a big company.;E9;
+CV2;I do not have professional experciencein in gamedvelopement yet. However I have worked as a coordinator in a logistics company, and I am convinced my knowledge will be an enormous help for SimTeam’s project. ;E10, E11, E12;
+CV3;Crunching tables and values in Excel was part of my daily routine.;E25;
+CV4;Making presentations to convince management about my ideas, made me a professional Power-Pointer.;E28;
+CV5;Allowed  me to learn fluent English.;E7;
+CV6;Allowed me to learn both English and German at a communicative level. ;E8, E12;
+CV7;In all of them I have focused on conception of mechanics and design documentation, leaving the implementation to the professionals.;E1, E4;
+CV8;In all of them I have worked in a small team which allowed me to gather hands-on in-engine experience.;E3;
+CV9;I have always tried to play as many different games as possible, which have given me extensive knowledge about gameplay solutions on the market. ;E5;
+CV10;My favorite genre has always been vehicle simulators. Spending thousands of hours made me an expert of industry standards of the genre. ;E6;
+A1;Hey boss. How is bossing going on?;;
+A2;Sup?;;
+A3;Everything alright, Henry? You seem worried?;;
+A4;I hate hand dryers! They take eternity.;E13;
+A5;And what did he say?;;
+A6;I think the investors may be right. The sales have indeed been dropping. We may need to consider a different genre.;e17;E18
+A7;Bullshit! They don’t know what they are saying. Yet, they are ones with the money. We may need to consider a different genre;E18, E19;E17
+A8;You are right. Everyone knows that Bob is an excellent lead… for certain projects. If we want to change the product, some other changes are necessary.;E15;
+A9;Well… truth to be told the drops in sales may also be a result of Bob’s underperformance. He seems burnt out lately. This may be a good time to install someone more energetic. And junger. ;E20;
+A10;Excellent Idea.;;
+A11;Looking at my coworkers... I know Miss Penny is the most skilled candidate.;E22;
+A12;Well, from the rumors I know Bob became the lead because he was the only person capable of using the printer. Everyone else is below that level…at least from the people who worked in the company back then. ;E23;
+A13;In my previous job I used to be a manager. If we find no-one else who could lead I can take that burden upon myself. ;E21;E9
+A14;Henry, if I may, most employees play only simulation games, as this was you recommended. I am a nonconformist and always swim against the tide. I spent countless hours practicing my genre deconstruction skills in front of my console. ;E5;E6
+A15;Huh?;;
+A16;?;;
+A17;??;;
+A18;??? huh… okay. But why Germany?;;
+A19;But… why me?;;
+A20;Well the only words I know in German is Guten Tag and Schadenfreude….;E24;E12
+A21;I know a lot of martial arts but Excel-Jitsu is not one of them. I am a hands-on designer. You got my records wrong.;E3,E26;E4,E27
+A22;But I have no idea about managing people! especially managing DJs!;E26;E21
+A23;Do you think there will be a lot of printing to do on the site?;;
+A24;Then I think we both know who should take the job….;;

@@ -1,9 +1,21 @@
 Situation Index;Type;NPC;Place;Text;Possible Answers
-S1;Q;Larry;Interview, Office;What was the most dificult project you worked on so far?;A1,A2,A3,A4
-S1;N;Larry;Interview, Office;Random text;A1,A2,A3,A4
-S1;N;Larry;Interview, Office;Random text;A1,A2,A3,A4
-S1;Q;Larry;Interview, Office;Hilfe;A1,A2,A3,A4
-S1;Q;Larry;Interview, Office;Random text;A1,A2,A3,A4
-S1;Q;CEO, Henry the Great;Henry's Office;Hilfe;A1,A2,A3,A4
-S2;N;CEO, Henry the Great;Henry's Office;Random text;A1,A2,A3,A4
-S2;Q;CEO, Henry the Great;Henry's Office;Hilfe;A1,A2,A3,A4
+S4;N;Henry;Bathroom;After the interview, you have rarely met SimTeam’s CEO, Henry, but he has always been chilled and friendly even to the most replaceable of employees, like Miss Penny.;
+S4;N;Henry;Bathroom;Today, as you keep drying your hands in the bathroom, in a desperate attempt to procrastinate your responsibilities, you hear the toilet flush, and Henry emerges from a stall. ;
+S4;N;Henry;Bathroom;He seems different than usual, worried. This is a good opportunity to talk to him. You may even make him remember your name this time. ;
+S4;Q;Henry;Bathroom;;A1,A2,A3,A4
+S4;Q;Henry;Bathroom;Everything is going wrong today, Tim. I just had a chat with our main investor and he wants to stop financing us. ;A5
+S4;Q;Henry;Bathroom;He said that the market changed and that there is no more demand on “old-fashioned” (he makes the quotation marks with his fingers in the air) bus simulators.;A6,A7
+S4;Q;Henry;Bathroom;How? Bob has been the lead on all previous installments of Bussi. I don't think he has experience with working on other genres.;A8,A9
+S4;Q;Henry;Bathroom;Huh… I have never thought about replacing Bob. This really would open up some opportunities.  The investor said we should make an action RPG.  But even if we replace the lead most of our staff are qualified to do bus simulators…;
+S4;N;Henry;Bathroom; As you keep drying your hands, Henry leaves a deep sigh and thinks for a moment leaning back on a wet washbasin. Suddenly, his face lights up.;
+S4;Q;Henry;Bathroom; I know! We will make a CROSS between a bus simulator and an action adventure RPG! With, like, an open world full of NPCs, touchy story, a cool combat system and at least 3 skill tries.  ;A10
+S4;Q;Henry;Bathroom;Now we just need to find a person who will replace Bob. You know the employees more than I do. Do you have any suggestions? Is anyone good with RPGs, who would qualify for a lead?;A11,A12
+S4;Q;Henry;Bathroom;Fuck. That’s true. So what do we do? ;A13,A14
+S4;Q;Henry;Bathroom;Interesting, your skillset is truly impressive. But actually, Bob and I have been planning to promote you to a completely different position. ;A15
+S4;Q;Henry;Bathroom;We decided to open a new branch in Germany and send you there as an Excel Database Coordinator Specialist. This will be an on-site job.;A16
+S4;Q;Henry;Bathroom;This will be a start-up doing something completely different than gamedev to make us swim in money. ;A17
+S4;Q;Henry;Bathroom;In short: we will allow people to choose DJs for their own funerals. ;A18
+S4;Q;Henry;Bathroom;Well, Germany is the biggest market in the world for simulators. And studies show that people die in Germany. It’s a p[erfect business opportunity. ;A19
+S4;Q;Henry;Bathroom;Well, from what I gathered your experience matches precisely the requirements of that job.;A20,A21,A22
+S4;Q;Henry;Bathroom;Well but Bob said… That is very very unfortunate. We may lose a great opportunity because of that…;A23
+S4;Q;Henry;Bathroom;Well but Bob said… That is very very unfortunate. We may lose a great opportunity because of that…;A24
