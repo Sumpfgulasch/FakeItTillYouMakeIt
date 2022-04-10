@@ -8,16 +8,14 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("References")]
-    public CanvasGroup StartScreen;
+    [Header("References")] public CanvasGroup StartScreen;
     public CanvasGroup QuestionScreen;
     public CanvasGroup NarrativeScreen;
     public CanvasGroup EndScreen;
     public CanvasGroup LostScreen;
     public CanvasGroup HUD;
-    public CanvasGroup NPCTexts;
-    [Space]
-    public TMP_Text NPCName;
+    public CanvasGroup NPCHUD;
+    [Space] public TMP_Text NPCName;
     public TMP_Text NPCLocation;
     public TMP_Text Question;
     public LayoutGroup AnswersParent;
@@ -26,12 +24,10 @@ public class UIManager : MonoBehaviour
     public TMP_Text NarrativeText;
     public TMP_Text NarrativeButton;
     public Button StartButton;
-    [Space]
-    public GameManager GameManager;
+    [Space] public GameManager GameManager;
     public GameObject AnswerPrefab;
 
-    [Header("Settings")]
-    [Range(0, 1f)] public float BackgroundFadeOutTime;
+    [Header("Settings")] [Range(0, 1f)] public float BackgroundFadeOutTime;
     [Range(0, 1f)] public float BackgroundFadeInDelay;
     [Range(0, 1f)] public float BackgroundFadeInTime;
     [Range(0, 1f)] public float BackgroundLightMidIntensity;
@@ -53,6 +49,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _currentScreen = StartScreen;
+        FadeOutEverything();
 
         StartButton.onClick.AddListener(GameManager.OnContinueButtonClicked);
         NarrativeButton.GetComponent<Button>().onClick.AddListener(GameManager.OnContinueButtonClicked);
@@ -66,7 +63,8 @@ public class UIManager : MonoBehaviour
         // 1. FADE OUT
         JoinFadeOutScreenTo(sequence, _currentScreen);
         if (slide is QuestionSlide)
-            JoinFadeOutScreenTo(sequence, NPCTexts);
+            JoinFadeOutScreenTo(sequence, NPCHUD);
+        sequence.Join(FadeBackgroundLight(BackgroundLightMaxIntensity, 0, BackgroundFadeOutTime));
 
         sequence.AppendInterval(BackgroundFadeInDelay);
 
@@ -85,6 +83,7 @@ public class UIManager : MonoBehaviour
                 sequence.Append(FadeBackgroundLight(0, BackgroundLightMidIntensity, BackgroundFadeInTime));
 
                 // NPC
+                sequence.AppendCallback(() => { NPCHUD.gameObject.SetActive(true); });
                 sequence.AppendInterval(SpeakerTimeBefore);
                 sequence.Append(NPCName.DOFade(1f, TextFadeInTime));
                 sequence.AppendInterval(SpeakerSpawnRyhthm);
@@ -93,16 +92,22 @@ public class UIManager : MonoBehaviour
 
                 // Question & background
                 sequence.Append(Question.DOFade(1f, 0));
-                sequence.Join(FadeBackgroundLight(BackgroundLightMidIntensity, BackgroundLightMaxIntensity,
-                    BackgroundLightIntensifyTime));
-
+                sequence.Join(FadeBackgroundLight(BackgroundLightMidIntensity, BackgroundLightMaxIntensity, BackgroundLightIntensifyTime));
                 sequence.AppendInterval(QuestionTimeAfter);
-                Answers.ForEach(answer =>
+
+                // Answers
+                CanvasGroup[] answers = default;
+                sequence.AppendCallback(() =>
                 {
-                    // Answers
-                    sequence.Append(answer.DOFade(1f, 0));
-                    sequence.AppendInterval(AnswersSpawnRhythm);
+                    answers = Answers;
+                    answers.ForEach(answer =>
+                    {
+                        sequence.Append(answer.DOFade(1f, 0));
+                        sequence.AppendInterval(AnswersSpawnRhythm);
+                    });
                 });
+
+
                 break;
             }
 
@@ -111,22 +116,35 @@ public class UIManager : MonoBehaviour
                 _currentScreen = NarrativeScreen;
                 sequence.AppendCallback(() => { _currentScreen.gameObject.SetActive(true); });
 
+                // Background
+                sequence.Append(FadeBackgroundLight(0, BackgroundLightMidIntensity, BackgroundFadeInTime));
+
                 // Text & button
                 sequence.Append(NarrativeText.DOFade(1f, TextFadeInTime2));
                 sequence.AppendInterval(NarrativeTextTimeAfter);
                 sequence.Append(NarrativeButton.DOFade(1f, TextFadeInTime2));
                 break;
             }
-
         }
+
         return sequence;
     }
 
-    private void JoinFadeOutScreenTo (Sequence sequence, CanvasGroup screen)
+    private void FadeOutEverything()
     {
-        var children = screen.GetComponentsInChildren<TMP_Text>();
+        var sequence = DOTween.Sequence();
+        JoinFadeOutScreenTo(sequence, QuestionScreen);
+        JoinFadeOutScreenTo(sequence, NarrativeScreen);
+        JoinFadeOutScreenTo(sequence, NPCHUD);
+    }
 
-        children.ForEach(text => sequence.Join(text.DOFade(0, BackgroundFadeOutTime)));
+    private void JoinFadeOutScreenTo(Sequence sequence, CanvasGroup screen)
+    {
+        var texts = screen.GetComponentsInChildren<TMP_Text>();
+        var images = screen.GetComponentsInChildren<Image>();
+
+        texts.ForEach(text => sequence.Join(text.DOFade(0, BackgroundFadeOutTime)));
+        images.ForEach(image => sequence.Join(image.DOFade(0, BackgroundFadeOutTime)));
         sequence.AppendCallback(() => screen.gameObject.SetActive(false));
     }
 
@@ -183,11 +201,10 @@ public class UIManager : MonoBehaviour
             case NarrativeSlide:
             {
                 NarrativeText.text = slide.Text;
+                NarrativeText.alpha = 0;
                 break;
             }
         }
-
-
     }
 
     private void RemoveAnswer(Transform transform)
@@ -200,6 +217,7 @@ public class UIManager : MonoBehaviour
     {
         var answerObject = Instantiate(AnswerPrefab, AnswersParent.transform);
         answerObject.GetComponentInChildren<TMP_Text>().text = answer.Text;
+        answerObject.GetComponent<CanvasGroup>().alpha = 0;
         answerObject.GetComponent<AnswerHolder>().Answer = answer;
         answerObject.GetComponent<AnswerHolder>().OnClick += GameManager.OnAnswerChosen;
     }

@@ -1358,7 +1358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &686693341
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2642,7 +2642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1705556968
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2908,6 +2908,10 @@ PrefabInstance:
       propertyPath: Canvas
       value: 
       objectReference: {fileID: 100890583}
+    - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
+      propertyPath: NPCHUD
+      value: 
+      objectReference: {fileID: 686693342}
     - target: {fileID: 8749612560688751151, guid: 953efd86cb28b02448d1c6afa3086b8d, type: 3}
       propertyPath: Answers
       value: 

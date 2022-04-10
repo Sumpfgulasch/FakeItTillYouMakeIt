@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private int _currentSituationIndex;
 
-    private int _currentSlideIndex;
+    private int _currentSlideIndex = -1;
     public int MaxPlayerLifes;
 
     private int _playerLifes;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         _playerLifes = MaxPlayerLifes;
 
-        UIManager.LoadSlideTexts(CurrentSlide);
+        //UIManager.LoadSlideTexts(CurrentSlide);
     }
 
     public void OnAnswerChosen(Answer answer)
